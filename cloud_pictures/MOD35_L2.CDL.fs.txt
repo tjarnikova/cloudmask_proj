@@ -1,0 +1,649 @@
+----------------------------------------------------------------------------
+// MODIS HDF File Specification MOD35_L2: MODIS Level 2 Cloud Mask Product   
+//              at 1 km and 250 m spatial resolutions                        
+//
+// This file specification document is written mainly in the network Common 
+// Data Form Language (CDL) to define HDF dimension names and sizes, and to 
+// declare attributes and arrays in terms of the dimensions.  Other HDF 
+// objects not representable in CDL constructs (e.g. Vdata, Vgroups and ECS 
+// metadata) are described within comment blocks (any line or lines beginning 
+// with the characters "//").  
+//
+// Array indexing is described in terms of the C programming language which 
+// is row dominant. 
+//----------------------------------------------------------------------------
+
+netcdf MOD35_L2 {
+
+dimensions:
+
+        Cell_Across_Swath_1km:mod35 = 1354 ;     // typical size
+        Cell_Across_Swath_5km:mod35 = 270 ;      // typical size
+        Cell_Along_Swath_1km:mod35 = 2030 ;      // typical size
+        Cell_Along_Swath_5km:mod35 = 406 ;       // typical size
+        Byte_Segment:mod35 = 6 ;
+        QA_Dimension:mod35 = 10 ;
+
+variables:
+
+        :Number_of_Instrument_Scans = 203 ;      // typical value
+        :Maximum_Number_of_1km_Frames = 1354 ;   // typical value
+        :title = "MODIS Level 2 Cloud Mask" ; 
+        :history = "$Id: MOD35.V2.CDL,v 1.1.2.5 2002/09/16 18:24:50 raf Exp $" ;
+
+// The first SDS below, Byte_Segment, is represented here as a 1-dimensional
+// array, even though it is actually implemented as a HDF Vdata object, or
+// table, in the MOD35 product file.  The description of this object in terms
+// of Vdata parameters is provided in the vdata section below.
+
+        long Byte_Segment(Byte_Segment:mod35) ;
+
+
+        double Scan_Start_Time(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Scan_Start_Time:long_name = "TAI time at start of scan replicated across the swath" ;
+                Scan_Start_Time:units = "seconds since 1993-1-1 00:00:00.0 0" ;
+                Scan_Start_Time:valid_range = 0.0d, 3.1558e9d ;
+                Scan_Start_Time:_FillValue = -999.9d ;
+                Scan_Start_Time:scale_factor = 1.0d ;
+                Scan_Start_Time:add_offset = 0.0d ;
+                Scan_Start_Time:Parameter_Type = "MODIS Input" ;
+                Scan_Start_Time:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Scan_Start_Time:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Scan_Start_Time:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+
+        float Latitude(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Latitude:long_name = "Geodetic Latitude" ;
+                Latitude:units = "degrees_north" ;
+                Latitude:valid_range = -90.0f, 90.0f ;
+                Latitude:_FillValue = -999.99f ;
+                Latitude:scale_factor = 1.0d ;
+                Latitude:add_offset = 0.0d ;
+                Latitude:Parameter_Type = "MODIS Input" ;
+                Latitude:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Latitude:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Latitude:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        float Longitude(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Longitude:long_name = "Geodetic Longitude" ;
+                Longitude:units = "degrees_east" ;
+                Longitude:valid_range = -180.0f, 180.0f ;
+                Longitude:_FillValue = -999.99f ;
+                Longitude:scale_factor = 1.0d ;
+                Longitude:add_offset = 0.0d ;
+                Longitude:Parameter_Type = "MODIS Input" ;
+                Longitude:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Longitude:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Longitude:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        short Solar_Zenith(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Solar_Zenith:long_name = "Solar Zenith Angle, Cell to Sun" ;
+                Solar_Zenith:units = "degrees" ;
+                Solar_Zenith:valid_range = 0s, 18000s ;
+                Solar_Zenith:_FillValue = -9999s ;
+                Solar_Zenith:scale_factor = 0.01d ;
+                Solar_Zenith:add_offset = 0.0d ;
+                Solar_Zenith:Parameter_Type = "MODIS Input" ;
+                Solar_Zenith:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Solar_Zenith:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Solar_Zenith:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        short Solar_Azimuth(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Solar_Azimuth:long_name = "Solar Azimuth Angle, Cell to Sun" ;
+                Solar_Azimuth:units = "degrees" ;
+                Solar_Azimuth:valid_range = -18000s, 18000s ;
+                Solar_Azimuth:_FillValue = -9999s ;
+                Solar_Azimuth:scale_factor = 0.01d ;
+                Solar_Azimuth:add_offset = 0.0d ;
+                Solar_Azimuth:Parameter_Type = "MODIS Input" ;
+                Solar_Azimuth:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Solar_Azimuth:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Solar_Azimuth:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        short Sensor_Zenith(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Sensor_Zenith:long_name = "Sensor Zenith Angle, Cell to Sensor" ;
+                Sensor_Zenith:units = "degrees" ;
+                Sensor_Zenith:valid_range = 0s, 18000s ;
+                Sensor_Zenith:_FillValue = -9999s ;
+                Sensor_Zenith:scale_factor = 0.01d ;
+                Sensor_Zenith:add_offset = 0.0d ;
+                Sensor_Zenith:Parameter_Type = "MODIS Input" ;
+                Sensor_Zenith:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Sensor_Zenith:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Sensor_Zenith:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        short Sensor_Azimuth(Cell_Along_Swath_5km:mod35,Cell_Across_Swath_5km:mod35) ;
+                Sensor_Azimuth:long_name = "Sensor Azimuth Angle, Cell to Sensor" ;
+                Sensor_Azimuth:units = "degrees" ;
+                Sensor_Azimuth:valid_range = -18000s, 18000s ;
+                Sensor_Azimuth:_FillValue = -9999s ;
+                Sensor_Azimuth:scale_factor = 0.01d ;
+                Sensor_Azimuth:add_offset = 0.0d ;
+                Sensor_Azimuth:Parameter_Type = "MODIS Input" ;
+                Sensor_Azimuth:Cell_Across_Swath_Sampling = 3, 1348, 5 ;
+                Sensor_Azimuth:Cell_Along_Swath_Sampling = 3, 2028, 5 ;
+                Sensor_Azimuth:Geolocation_Pointer = "Internal geolocation arrays" ;
+
+        byte Cloud_Mask(Byte_Segment:mod35,Cell_Along_Swath_1km:mod35,Cell_Across_Swath_1km:mod35) ;
+                Cloud_Mask:long_name = "MODIS Cloud Mask and Spectral Test Results" ;
+                Cloud_Mask:units = "none" ;
+                Cloud_Mask:valid_range = '\0', '\377' ;
+                Cloud_Mask:_FillValue = '\0' ;
+                Cloud_Mask:scale_factor = 1.0d ;
+                Cloud_Mask:add_offset = 0.0d ;
+                Cloud_Mask:Parameter_Type = "Output" ;
+                Cloud_Mask:Cell_Across_Swath_Sampling = 1, 1354, 1 ;
+                Cloud_Mask:Cell_Along_Swath_Sampling = 1, 2030, 1 ;
+                Cloud_Mask:Geolocation_Pointer = "External MODIS geolocation product" ;
+                Cloud_Mask:description = "\n",
+"                                                                          \n",
+" Bit fields within each byte are numbered from the left:                  \n",
+" 7, 6, 5, 4, 3, 2, 1, 0.                                                  \n",
+" The left-most bit (bit 7) is the most significant bit.                   \n",
+" The right-most bit (bit 0) is the least significant bit.                 \n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ---------       -----------                             ---              \n",
+"                                                                          \n",
+" 0               Cloud Mask Flag                      0 = Not determined  \n",
+"                                                      1 = Determined      \n",
+"                                                                          \n",
+" 2, 1            Unobstructed FOV Quality Flag        00 = Cloudy         \n",
+"                                                      01 = Uncertain      \n",
+"                                                      10 = Probably Clear \n",
+"                                                      11 = Confident Clear\n",
+"                 PROCESSING PATH                                          \n",
+"                 ---------------                                          \n",
+" 3               Day or Night Path                    0 = Night / 1 = Day \n",
+" 4               Sunglint Path                        0 = Yes   / 1 = No  \n",
+" 5               Snow/Ice Background Path             0 = Yes   / 1 = No  \n",
+" 7, 6            Land or Water Path                   00 = Water          \n",
+"                                                      01 = Coastal        \n",
+"                                                      10 = Desert         \n",
+"                                                      11 = Land           \n",
+" ____ END BYTE 1 _________________________________________________________\n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ---------       -----------                             ---              \n",
+"                                                                          \n",
+"                 ADDITIONAL INFORMATION                                   \n",
+"                 ----------------------                                   \n",
+" 0               Non-cloud obstruction Flag              0 = Yes / 1 = No \n",
+" 1               Thin Cirrus Detected  (Solar)           0 = Yes / 1 = No \n",
+" 2               Shadow Found                            0 = Yes / 1 = No \n",
+" 3               Thin Cirrus Detected  (Infrared)        0 = Yes / 1 = No \n",
+" 4               Adjacent Cloud Detected **              0 = Yes / 1 = No \n",
+"                 ** Implemented Post Launch to                            \n",
+"                    Indicate cloud found within                           \n",
+"                    surrounding 1 km pixels *                             \n",
+"                                                                          \n",
+"                 1-km CLOUD FLAGS                                         \n",
+"                 ----------------                                         \n",
+" 5               Cloud Flag - IR Threshold               0 = Yes / 1 = No \n",
+" 6               High Cloud Flag - CO2 Test              0 = Yes / 1 = No \n",
+" 7               High Cloud Flag - 6.7 micron Test       0 = Yes / 1 = No \n",
+" ____ END BYTE 2 _________________________________________________________\n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ---------       -----------                             ---              \n",
+"                                                                          \n",
+" 0               High Cloud Flag - 1.38 micron Test      0 = Yes / 1 = No \n",
+" 1               High Cloud Flag - 3.7-12 micron Test    0 = Yes / 1 = No \n",
+" 2               Cloud Flag - IR Temperature             0 = Yes / 1 = No \n",
+"                              Difference                                  \n",
+" 3               Cloud Flag - 3.7-11 micron Test         0 = Yes / 1 = No \n",
+" 4               Cloud Flag - Visible Reflectance Test   0 = Yes / 1 = No \n",
+" 5               Cloud Flag - Visible Reflectance        0 = Yes / 1 = No \n",
+"                              Ratio Test                                  \n",
+" 6               Cloud Flag - NDVI Final Confidence      0 = Yes / 1 = No \n",
+"                              Confirmation Test                           \n",
+" 7               Cloud Flag - Night 7.3-11 micron Test   0 = Yes / 1 = No \n",
+" ____ END BYTE 3 _________________________________________________________\n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ---------       -----------                             ---              \n",
+"                                                                          \n",
+"                 ADDITIONAL TESTS                                         \n",
+"                 ----------------                                         \n",
+" 0               Cloud Flag - Spare                      0 = Yes / 1 = No \n",
+" 1               Cloud Flag - Spatial Variability        0 = Yes / 1 = No \n",
+" 2               Final Confidence Confirmation Test      0 = Yes / 1 = No \n",
+" 3               Cloud Flag - Night Water                0 = Yes / 1 = No \n",
+"                              Spatial Variability                         \n",
+" 4               Suspended Dust Flag                     0 = Yes / 1 = No \n",
+"                                                                          \n",
+" 5-7             Spares                                                   \n",
+" ____ END BYTE 4 _________________________________________________________\n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ---------       -----------                             ---              \n",
+"                                                                          \n",
+"                 250-m Cloud Flag - Visible Tests                         \n",
+"                 --------------------------------                         \n",
+" 0               Element(1,1)                            0 = Yes / 1 = No \n",
+" 1               Element(1,2)                            0 = Yes / 1 = No \n",
+" 2               Element(1,3)                            0 = Yes / 1 = No \n",
+" 3               Element(1,4)                            0 = Yes / 1 = No \n",
+" 4               Element(2,1)                            0 = Yes / 1 = No \n",
+" 5               Element(2,2)                            0 = Yes / 1 = No \n",
+" 6               Element(2,3)                            0 = Yes / 1 = No \n",
+" 7               Element(2,4)                            0 = Yes / 1 = No \n",
+" ____ END BYTE 5 _________________________________________________________\n",
+"                                                                          \n",
+" bit field       Description                             Key              \n",
+" ----------      -----------                             ---              \n",
+"                                                                          \n",
+" 0               Element(3,1)                            0 = Yes / 1 = No \n",
+" 1               Element(3,2)                            0 = Yes / 1 = No \n",
+" 2               Element(3,3)                            0 = Yes / 1 = No \n",
+" 3               Element(3,4)                            0 = Yes / 1 = No \n",
+" 4               Element(4,1)                            0 = Yes / 1 = No \n",
+" 5               Element(4,2)                            0 = Yes / 1 = No \n",
+" 6               Element(4,3)                            0 = Yes / 1 = No \n",
+" 7               Element(4,4)                            0 = Yes / 1 = No \n",
+" ____ END BYTE 6 _________________________________________________________\n" ;
+
+
+        byte Quality_Assurance(Cell_Along_Swath_1km:mod35,Cell_Across_Swath_1km:mod35,QA_Dimension:mod35) ;
+                Quality_Assurance:long_name = "Quality Assurance for Cloud Mask" ;
+                Quality_Assurance:units = "none" ;
+                Quality_Assurance:valid_range = '\0', '\377' ;
+                Quality_Assurance:_FillValue = '\0' ;
+                Quality_Assurance:scale_factor = 1.0d ;
+                Quality_Assurance:add_offset = 0.0d ;
+                Quality_Assurance:Parameter_Type = "Output" ;
+                Quality_Assurance:Cell_Across_Swath_Sampling = 1, 1354, 1 ;
+                Quality_Assurance:Cell_Along_Swath_Sampling = 1, 2030, 1 ;
+                Quality_Assurance:Geolocation_Pointer = "External MODIS geolocation product" ;
+                Quality_Assurance:description = "\n",
+"        Product Run Time QA Flags                                   \n",
+" QA Flag Name    Number of Bits  Bit Value   Description            \n",
+" -------------------------------------------------------------      \n",
+" Cloud Mask QA        1             0       not useful              \n",
+"   (1km)                            1       useful                  \n",
+"                                                                    \n",
+" Cloud Mask           3            0-7      8 confidence levels     \n",
+"   Confidence QA                                                    \n",
+"   (1km)                                                            \n",
+"                                                                    \n",
+" Spares               4                                             \n",
+"  -------- ( 1 byte total ) --------------------------------        \n",
+"                                                                    \n",
+" Optional run time QA flags - Individual test application           \n",
+"                                                                    \n",
+" QA Flag Name    Number of Bits  Bit Value   Description            \n",
+" -------------------------------------------------------------      \n",
+" NCO test             1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" Thin Cirrus          1             0       Not Applied             \n",
+"   test (Solar)                     1       Applied                 \n",
+"                                                                    \n",
+" Shadow Tests         1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" Thin Cirrus          1             0       Not Applied             \n",
+"   test(IR)                         1       Applied                 \n",
+"                                                                    \n",
+" Cloud Adjancency     1             0       Not Applied             \n",
+"   test(IR)                         1       Applied                 \n",
+"                                                                    \n",
+" IR Threshold         1             0       Not Applied             \n",
+"   test                             1       Applied                 \n",
+"                                                                    \n",
+" High Cloud           1             0       Not Applied             \n",
+"   Test (CO2)                       1       Applied                 \n",
+"                                                                    \n",
+" High Cloud           1             0       Not Applied             \n",
+"   Test (6.7)                       1       Applied                 \n",
+"                                                                    \n",
+" High Cloud           1             0       Not Applied             \n",
+"   Test (1.38)                      1       Applied                 \n",
+"                                                                    \n",
+" High Cloud           1             0       Not Applied             \n",
+"   Test (3.7-12um)                  1       Applied                 \n",
+"                                                                    \n",
+" IR Temperature       1             0       Not Applied             \n",
+"   Difference Tests                 1       Applied                 \n",
+"                                                                    \n",
+" 3.7-11um Test        1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" .68 Reflectance      1             0       Not Applied             \n",
+"   Test                             1       Applied                 \n",
+"                                                                    \n",
+" Visible Ratio        1             0       Not Applied             \n",
+"   Test                             1       Applied                 \n",
+"                                                                    \n",
+" NDVI Final           1             0       Not Applied             \n",
+"   Confidence                       1       Applied                 \n",
+"   Confirmation                                                     \n",
+"                                                                    \n",
+" Spare                1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" Spare                1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" Spatial              1             0       Not Applied             \n",
+"   Variability Test                 1       Applied                 \n",
+"                                                                    \n",
+" Final Confidence     1             0       Not Applied             \n",
+"   Confirmation Test                1       Applied                 \n",
+"                                                                    \n",
+" Night Water          1             0       Not Applied             \n",
+"   Spatial Variability              1       Applied                 \n",
+"                                                                    \n",
+" Suspended Dust Test  1             0       Not Applied             \n",
+"                                    1       Applied                 \n",
+"                                                                    \n",
+" Spares               3                                             \n",
+"                                                                    \n",
+" 250 m Visible      1(16)           0       Not Applied             \n",
+"   Tests                            1       Applied                 \n",
+"   (16 times as (line1,element1),(line1, element2),...              \n",
+"   (line4,element4))                                                \n",
+"                                                                    \n",
+"  -------- ( 5 bytes total ) --------------------------------       \n",
+"                                                                    \n",
+" Optional run time QA flags - data information flags                \n",
+"                                                                    \n",
+" QA Flag Name    Number of Bits  Bit Value   Description            \n",
+"  -------------------------------------------------------------     \n",
+" Number of            2             0       None                    \n",
+"   bands used to                    1       1-7                     \n",
+"   generate                         2       8-14                    \n",
+"   cloud mask                       3       15-21                   \n",
+"                                                                    \n",
+" Number of            2             0       None                    \n",
+"   spectral                         1       1-3                     \n",
+"   tests used to                    2       4-6                     \n",
+"   generate                         3       7-9                     \n",
+"   cloud mask                                                       \n",
+"                                                                    \n",
+" Spares               4                                             \n",
+"                                                                    \n",
+"  -------- ( 1 byte total ) --------------------------------        \n",
+"                                                                    \n",
+" Optional run time QA flags - data resource flags                      \n",
+"                                                                       \n",
+" QA Flag Name    Number of Bits  Bit Value   Description               \n",
+" -------------------------------------------------------------         \n",
+" Clear                2             0       MOD35                      \n",
+"   Radiance                         1       Model forward calculation  \n",
+"   Origin                           2       Other                      \n",
+"                                    3       Not used                   \n",
+"                                                                       \n",
+" Surface              2             0       NCEP GDAS                  \n",
+"   Temperature                      1       DAO                        \n",
+"   Over Land                        2       MOD11                      \n",
+"                                    3       Other                      \n",
+"                                                                       \n",
+" Surface              2             0       Reynolds blended           \n",
+"   Temperature                      1       DAO                        \n",
+"   Over Ocean                       2       MOD28                      \n",
+"                                    3       Other                      \n",
+"                                                                       \n",
+" Surface Winds        2             0       NCEP GDAS                  \n",
+"                                    1       DAO                        \n",
+"                                    2       Other                      \n",
+"                                    3       Not used                   \n",
+"                                                                       \n",
+" Ecosystem Map        2             0       Loveland NA 1km            \n",
+"                                    1       Olson Ecosystem            \n",
+"                                    2       MOD12                      \n",
+"                                    3       Other                      \n",
+"                                                                       \n",
+" Snow mask            2             0       MOD33                      \n",
+"                                    1       SSMI Product               \n",
+"                                    2       Other                      \n",
+"                                    3       Not used                   \n",
+"                                                                       \n",
+" Ice cover            2             0       MOD42                      \n",
+"                                    1       SSMI product               \n",
+"                                    2       Other                      \n",
+"                                    3       Not used                   \n",
+"                                                                       \n",
+" Land/Sea Mask        2             0       USGS 1 km 6 level          \n",
+"                                    1       USGS 1 km binary           \n",
+"                                    2       Other                      \n",
+"                                    3       Not used                   \n",
+"                                                                       \n",
+" Digital              1             0       EOS DEM                    \n",
+"   Elevation                        1       Not used                   \n",
+"   Model                                                               \n",
+"                                                                       \n",
+" Precipitable         2             0       NCEP GDAS                  \n",
+"   Water                            1       DAO                        \n",
+"                                    2       MOD07                      \n",
+"                                    3       Other                      \n",
+"                                                                       \n",
+" Spare                5                                                \n",
+"                                                                       \n",
+"  -------- ( 3 bytes total ) --------------------------------          \n",
+"                                                                       \n" ;
+
+data:
+
+        Byte_Segment = 1, 2, 3, 4, 5, 6 ;
+
+
+//---------------------------------------------------------------------------------------
+//                              ECS Inventory Metadata
+//
+// ECS Inventory Metadata are stored in the HDF attribute "CoreMetadata.0" whose
+// content is described immediately below.
+//---------------------------------------------------------------------------------------
+//
+//			                             ECS     Number Of   Typical Value 
+//   ECS Core Attribute Name                      Data Type    Values      or Comment
+//   -----------------------                      ---------  ---------   --------------
+//      SHORTNAME                                  STRING        1       "MOD35_L2"
+//      VERSIONID                                  INTEGER       1       2
+//      REPROCESSINGACTUAL                         STRING        1       "processed once"
+//      REPROCESSINGPLANNED                        STRING        1       "further update anticipated"
+//      LOCALGRANULEID                             STRING        1       variable
+//      LOCALVERSIONID                             STRING        1       "001"
+//      DAYNIGHTFLAG                               STRING        1       "Day/Night/Both"
+//      PRODUCTIONDATETIME                         DATETIME      1       variable
+//      PGEVERSION                                 STRING        1       "2"
+//      INPUTPOINTER                               STRING        25 (Max) all input URs
+//      
+//    RangeDateTime 
+//    -------------
+//      RANGEBEGINNINGTIME                         TIME          1       variable
+//      RANGEENDINGTIME                            TIME          1       variable
+//      RANGEBEGINNINGDATE                         DATE          1       variable
+//      RANGEENDINGDATE                            DATE          1       variable
+//
+//    Bounding Rectangle
+//    ------------------
+//      EASTBOUNDINGCOORDINATE                     DOUBLE        1       variable
+//      WESTBOUNDINGCOORDINATE                     DOUBLE        1       variable
+//      NORTHBOUNDINGCOORDINATE                    DOUBLE        1       variable
+//      SOUTHBOUNDINGCOORDINATE                    DOUBLE        1       variable
+//
+//    OrbitCalculatedSpatialDomain
+//    ----------------------------
+//      ORBITNUMBER.1                              INTEGER       1       variable
+//      EQUATORCROSSINGLONGITUDE.1                 DOUBLE        1       variable
+//      EQUATORCROSSINGDATE.1                      DATE          1       variable
+//      EQUATORCROSSINGTIME.1                      TIME          1       variable
+//
+//    MeasuredParameter
+//    -----------------
+//      PARAMETERNAME.1                            STRING        1       "Cloud_Mask"
+//      AUTOMATICQUALITYFLAG.1                     STRING        1       "Passed" or "Failed"
+//      AUTOMATICQUALITYFLAGEXPLANATION.1          STRING        1       "Passed if useable, Failed if not useable"
+//      QAPERCENTMISSINGDATA.1                     INTEGER       1       0
+//
+//    Additional Attributes (Inventory PSAs)
+//    --------------------------------------
+//      ADDITIONALATTRIBUTENAME.1                  STRING        1       "SuccessfulRetrievalPct"
+//      ADDITIONALATTRIBUTENAME.2                  STRING        1       "VeryHighConfidentClearPct"
+//      ADDITIONALATTRIBUTENAME.3                  STRING        1       "HighConfidentClearPct"
+//      ADDITIONALATTRIBUTENAME.4                  STRING        1       "UncertainConfidentClearPct"
+//      ADDITIONALATTRIBUTENAME.5                  STRING        1       "LowConfidentClearPct"
+//      ADDITIONALATTRIBUTENAME.6                  STRING        1       "CloudCoverPct250m"
+//      ADDITIONALATTRIBUTENAME.7                  STRING        1       "ClearPct250m"
+//      ADDITIONALATTRIBUTENAME.8                  STRING        1       "DayProcessedPct"
+//      ADDITIONALATTRIBUTENAME.9                  STRING        1       "NightProcessedPct"
+//      ADDITIONALATTRIBUTENAME.10                 STRING        1       "SunglintProcessedPct"
+//      ADDITIONALATTRIBUTENAME.11                 STRING        1       "Snow_IceSurfaceProcessedPct"
+//      ADDITIONALATTRIBUTENAME.12                 STRING        1       "LandProcessedPct"
+//      ADDITIONALATTRIBUTENAME.13                 STRING        1       "WaterProcessedPct"
+//      ADDITIONALATTRIBUTENAME.14                 STRING        1       "ShadowFoundPct"
+//      ADDITIONALATTRIBUTENAME.15                 STRING        1       "ThinCirrusSolarFoundPct"
+//      ADDITIONALATTRIBUTENAME.16                 STRING        1       "ThinCirrusIR_FoundPct"
+//      ADDITIONALATTRIBUTENAME.17                 STRING        1       "NonCloudObstructionFoundPct"
+//      ADDITIONALATTRIBUTENAME.18                 STRING        1       "MaxSolarZenithAngle"
+//      ADDITIONALATTRIBUTENAME.19                 STRING        1       "MinSolarZenithAngle"
+//
+//      PARAMETERVALUE.1                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.2                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.3                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.4                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.5                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.6                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.7                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.8                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.9                           STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.10                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.11                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.12                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.13                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.14                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.15                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.16                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.17                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.18                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//      PARAMETERVALUE.19                          STRING        1       "   54.25", an F8.2 formatted floating point number 
+//
+//    Ancillary Input Granule
+//    -----------------------
+//      ANCILLARYINPUTTYPE.1                       STRING        1       "Geolocation"
+//      ANCILLARYINPPUTPOINTER.1                   STRING        1       UR of geolocation granule
+//
+//    AssociatedPlatformInstrumentSensor
+//    ----------------------------------
+//      ASSOCIATEDPLATFORMSHORTNAME.1              STRING        1       "AM-1"
+//      ASSOCIATEDINSTRUMENTSHORTNAME.1            STRING        1       "MODIS"
+//      ASSOCIATEDSENSORSHORTNAME.1                STRING        1       "CCD"
+//
+//
+//---------------------------------------------------------------------------------------
+//                              ECS Archive Metadata
+//
+// ECS Archive Metadata are stored in the HDF attribute "ArchiveMetadata.0" whose
+// content is described immediately below.
+//---------------------------------------------------------------------------------------
+//
+//			                             ECS     Number Of   Typical Value 
+//   ECS Core Attribute Name                      Data Type    Values      or Comment
+//   -----------------------                      ---------  ---------   --------------
+//      DESCRREVISION                             STRING         1        "1.1"
+//
+//   Algorithm Package
+//   -----------------
+//      ALGORITHMPACKAGEACCEPTANCEDATE            STRING         1       "June 1997"
+//      ALGORITHMPACKAGEMATURITYCODE              STRING         1       "at-launch"
+//      ALGORITHMPACKAGENAME                      STRING         1       "ATBD-MOD-06"
+//      ALGORITHMPACKAGEVERSION                   STRING         1       "2"
+//      INSTRUMENTNAME                            STRING         1       "Moderate Resolution
+//                                                                        Imaging Spectroradiometer"
+//      LOCALINPUTGRANULEID                        STRING        10(Max)  MODIS product input file
+//                                                                        names in MODIS naming
+//                                                                        convention
+//      LONGNAME                                  STRING         1       "MODIS Cloud Mask and
+//                                                                        Spectral Test Results"
+//
+//   GPolygon
+//   --------
+//      EXCLUSIONGRINGFLAG                        STRING         M,1     variable
+//      GRINGPOINTLATITUDE                        DOUBLE         M,4     variable
+//      GRINGPOINTLONGITUDE                       DOUBLE         M,4     variable
+//      GRINGPOINTSEQUENCENO                      INTEGER        M,4     variable
+//
+//   Product Specific
+//   ----------------
+//	Cloud_Mask_Algorithm_Version_Number       STRING          1      '1'
+//
+//  
+//M - indicates that multiple instances of these fields may be written to the
+//    file in the ECS "CLASS" format.  In this format, separate instances of
+//    the field are identified by field name and an attached suffix of the form:
+//    .1, .2, .3 etc.  "M,4" means, for example, that an array of 4 corner point
+//    latitudes is written to the file with each occurrence of field
+//    GRINGPOINTLATITUDE.  The first instance is specified as
+//    GRINGPOINTLATITUDE.1.  Only one occurrence of this field, and the
+//    associated fields EXCLUSIONGRINGFLAG, GRINGPOINTLONGITUDE and
+//    GRINGPOINTSEQUENCENO, are ever anticipated for MODIS.
+//
+//
+//---------------------------------------------------------------------------------------
+//                              ECS Structural Metadata
+//
+// ECS Structural Metadata are stored in the HDF attribute "StructMetadata.0" whose
+// content is described immediately below.
+//---------------------------------------------------------------------------------------
+//
+//GROUP=SwathStructure
+//
+//   GROUP=SWATH_1
+//      SwathName="mod35"
+//
+//      GROUP=Dimension
+//         Cell_Along_Swath_1km =  2030       typical size
+//         Cell_Across_Swath_1km = 1354       typical size
+//         Cell_Along_Swath_5km =  406        typical size
+//         Cell_Across_Swath_5km = 270        typical size
+//         Byte_Segment = 6
+//         QA_Dimension = 10
+//     
+//      GROUP=DimensionMap (GeoDimension, DataDimension, Offset, Increment)
+//         Cell_Across_Swath_5km, Cell_Across_Swath_1km, 2, 5
+//         Cell_Along_Swath_5km, Cell_Along_Swath_1km, 2, 5
+//     
+//      GROUP=IndexDimensionMap
+//         None
+//     
+//      GROUP=GeoField
+//         DFNT_FLOAT32 Longitude("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_FLOAT32 Latitude("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//     
+//      GROUP=DataField
+//         DFNT_FLOAT64 Scan_Start_Time("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_INT16 Byte_Segment("Byte_Segment")
+//         DFNT_INT16 Solar_Zenith("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_INT16 Solar_Azimuth("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_INT16 Sensor_Zenith("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_INT16 Sensor_Azimuth("Cell_Along_Swath_5km","Cell_Across_Swath_5km")
+//         DFNT_INT8 Cloud_Mask("Byte_Segment","Cell_Along_Swath_1km","Cell_Across_Swath_1km")
+//         DFNT_INT8 Quality Assurance("Cell_Along_Swath_1km","Cell_Across_Swath_1km","QA_Dimension")
+//
+//      GROUP=MergedFields
+//         None
+//
+//GROUP=GridStructure
+//   None
+//
+//GROUP=PointStructure
+//   None
+//
+//-----------------------------------------------------------------------------
+//                     Vdatas
+//-----------------------------------------------------------------------------
+//
+//Vdata = Byte_Segment
+//   Class =
+//   Number of Records = 6
+//   Number of Fields  = 1
+//   Field Descriptions:
+//
+//   Vdata Attributes:   None
+//
+//
+//   Field Descriptions:  Number           Type              Order      Name
+//                        ------           ----              -----      -----
+//                          0              DFNT_INT8           1        Band_Number
+}
